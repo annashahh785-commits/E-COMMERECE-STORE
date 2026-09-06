@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, EmailStr, Field , ConfigDict
 
 
 class UserCreate(BaseModel):
@@ -8,29 +8,17 @@ class UserCreate(BaseModel):
 
 
 class UserResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
     id: int
     username: str
     email: EmailStr
     role: str
 
-
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
 
-
 class CategoryCreate(BaseModel):
-    name: str
-
-
-class CategoryResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int
-    name: str
-
+    name:str
 
 class ProductCreate(BaseModel):
     name: str = Field(min_length=2, max_length=150)
@@ -52,17 +40,16 @@ class ProductResponse(BaseModel):
     category_id: int
     is_active: bool
 
-
 class CartItemCreate(BaseModel):
     product_id: int = Field(gt=0)
     quantity: int = Field(ge=1)
 
 
 class CartItemResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     product_id: int
     quantity: int
-
 
 class OrderResponse(BaseModel):
     id: int
@@ -70,8 +57,24 @@ class OrderResponse(BaseModel):
     total_amount: float
 
 
+
 class OrderItemResponse(BaseModel):
+    
     id: int
     product_id: int
     quantity: int
     unit_price: float
+
+
+class CategoryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    name: str
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+
+
+
